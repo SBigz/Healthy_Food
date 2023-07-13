@@ -1,7 +1,8 @@
 import styled from "styled-components/native";
-import { View, Text, Image } from "react-native";
+import { Text } from "react-native";
 
 import Images from "../constants/Images";
+import LargeCard from "../components/LargeCard";
 
 const Container = styled.SafeAreaView`
   flex: 1;
@@ -12,16 +13,15 @@ const Container = styled.SafeAreaView`
 const TopContainer = styled.View`
   flex: 1;
   width: 100%;
-  padding: 10px 20px;
+  padding: 10px 20px 0;
 `;
 
 const MidContainer = styled.View`
   flex: 2;
   width: 100%;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  padding-bottom: 5%;
-  background-color: yellow;
+  padding: 0 20px 20px 20px;
 `;
 
 const BottomUpContainer = styled.View`
@@ -73,8 +73,8 @@ const StyledText = styled.Text`
 
 const Device = styled.Text`
   font-family: "Rubik-SemiBold";
-  font-size: 24;
-  line-height: 32;
+  font-size: 24px;
+  line-height: 50px;
   font-weight: 600;
 `;
 
@@ -96,7 +96,12 @@ export default function Home() {
             <Text>Tyler Durden</Text>
           </Device>
         </TopContainer>
-        <MidContainer></MidContainer>
+        <MidContainer>
+          <LargeCard
+            title="Healthy Food"
+            subtitle="Keep your healthy life with healthy food"
+          />
+        </MidContainer>
         <BottomUpContainer></BottomUpContainer>
         <BottomDownContainer></BottomDownContainer>
       </Container>

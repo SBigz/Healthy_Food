@@ -1,10 +1,74 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import styled from "styled-components/native";
+import { View, Text } from "react-native";
 
-export default function LargeCard() {
+import Images from "../constants/Images";
+
+const Container = styled.View`
+  flex: 1;
+  background-color: #e5737d;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 0px 20px;
+`;
+
+const Title = styled.Text`
+  font-family: "Rubik-SemiBold";
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: white;
+  margin-top: 20px;
+`;
+
+const Subtitle = styled.Text`
+  font-family: "Rubik-Regular";
+  font-size: 16px;
+  line-height: 24px;
+  width: 200px;
+  color: white;
+  margin-top: 10px;
+`;
+
+const DynamicText = styled.View`
+  flex-direction: row;
+  margin-top: 10px;
+`;
+
+const Number = styled.Text`
+  font-weight: 500;
+  font-family: "Rubik-Regular";
+  font-size: 32px;
+  color: white;
+`;
+
+const Kcal = styled.Text`
+  font-size: 16px;
+  font-family: "Rubik-Regular";
+  line-height: 50px;
+  color: white;
+`;
+
+const Asset = styled.Image`
+  width: 214px;
+  height: 214px;
+  position: absolute;
+  top: 79px;
+  left: 180px;
+  z-index: -1;
+`;
+
+export default function LargeCard({ title, subtitle }) {
   return (
-    <View>
-      <Text>LargeCard</Text>
-    </View>
-  )
+    <Container>
+      <Title>{title}</Title>
+      <Subtitle>{subtitle}</Subtitle>
+      <DynamicText>
+        <Number>538{` `}</Number>
+        <Kcal>kcal</Kcal>
+      </DynamicText>
+      <Asset source={Images.Salad} />
+    </Container>
+  );
 }
