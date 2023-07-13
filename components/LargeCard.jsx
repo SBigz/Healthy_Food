@@ -1,5 +1,4 @@
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
 
 import Images from "../constants/Images";
 
@@ -41,7 +40,7 @@ const Number = styled.Text`
   font-family: "Rubik-Regular";
   font-size: 32px;
   color: white;
-  line-height: 40px,
+  line-height: 40px;
 `;
 
 const Kcal = styled.Text`

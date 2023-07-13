@@ -3,11 +3,12 @@ import { Text } from "react-native";
 
 import Images from "../constants/Images";
 import LargeCard from "../components/LargeCard";
+import SmallCard from "../components/SmallCard";
 
 const Container = styled.SafeAreaView`
   flex: 1;
   align-items: center;
-  background-color: white;
+  background-color: whitesmoke;
 `;
 
 const TopContainer = styled.View`
@@ -27,18 +28,21 @@ const MidContainer = styled.View`
 const BottomUpContainer = styled.View`
   flex: 2;
   width: 100%;
-  justify-content: flex-end;
-  align-items: center;
   padding-bottom: 5%;
-  background-color: orange;
+  padding: 0 20px 20px 20px;
 `;
 
 const BottomDownContainer = styled.View`
   flex: 2;
   width: 100%;
-  align-items: center;
   padding-bottom: 5%;
-  background-color: grey;
+  padding: 0 20px 20px 20px;
+`;
+
+const CardContainer = styled.View`
+  flex: 2;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const WelcomeContainer = styled.View`
@@ -79,6 +83,16 @@ const Device = styled.Text`
   font-weight: 600;
 `;
 
+const Title = styled.Text`
+  flex: 1;
+  font-family: "Rubik-SemiBold";
+  font-size: 18px;
+  line-height: 28px;
+  font-weight: 600;
+  color: black;
+  text-align: left;
+`;
+
 export default function Home() {
   return (
     <>
@@ -103,8 +117,18 @@ export default function Home() {
             subtitle="Keep your healthy life with healthy food"
           />
         </MidContainer>
-        <BottomUpContainer></BottomUpContainer>
-        <BottomDownContainer></BottomDownContainer>
+        <BottomUpContainer>
+          <Title>Favorite Chicken</Title>
+          <CardContainer>
+            <SmallCard />
+          </CardContainer>
+        </BottomUpContainer>
+        <BottomDownContainer>
+          <Title>Favorite Pizzas</Title>
+          <CardContainer>
+            <SmallCard />
+          </CardContainer>
+        </BottomDownContainer>
       </Container>
     </>
   );
