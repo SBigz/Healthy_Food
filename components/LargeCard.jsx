@@ -33,7 +33,7 @@ const Subtitle = styled.Text`
 
 const DynamicText = styled.View`
   flex-direction: row;
-  margin-top: 10px;
+  margin-top: 20px;
 `;
 
 const Number = styled.Text`
@@ -41,6 +41,7 @@ const Number = styled.Text`
   font-family: "Rubik-Regular";
   font-size: 32px;
   color: white;
+  line-height: 40px,
 `;
 
 const Kcal = styled.Text`

@@ -55,6 +55,7 @@ const Right = styled.View`
   flex: 1;
   flex-direction: row;
   justify-content: flex-end;
+  margin-right: 4px;
 `;
 
 const Logo = styled.Image`
