@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import { Text, ScrollView } from "react-native";
+import * as Device from "expo-device";
 
 import Images from "../constants/Images";
 import LargeCard from "../components/LargeCard";
@@ -72,7 +74,7 @@ const StyledText = styled.Text`
   margin-left: 10px;
 `;
 
-const Device = styled.Text`
+const DeviceName = styled.Text`
   font-family: "Rubik-SemiBold";
   font-size: 24px;
   line-height: 50px;
@@ -90,22 +92,49 @@ const Title = styled.Text`
 `;
 
 export default function Home() {
+  // Get device name
+  const deviceName = Device.modelName;
+
+  // Get current time
+  const [currentPeriod, setCurrentPeriod] = useState("Good morning");
+
+  useEffect(() => {
+    const hour = new Date().getHours();
+    let period = "Good morning";
+
+    if (hour >= 10 && hour < 22) {
+      period = "Good day";
+    } else if (hour >= 22 || hour < 8) {
+      period = "Good night";
+    }
+
+    setCurrentPeriod(period);
+  }, []);
+
   return (
     <>
       <Container>
         <TopContainer>
           <WelcomeContainer>
             <Left>
-              <Logo source={Images.Sunrise} />
-              <StyledText>Good Morning</StyledText>
+              <Logo
+                source={
+                  currentPeriod === "Good night"
+                    ? Images.Moon
+                    : currentPeriod === "Good day"
+                    ? Images.Sun
+                    : Images.Sunrise
+                }
+              />
+              <StyledText>{currentPeriod}</StyledText>
             </Left>
             <Right>
               <Logo source={Images.Bell} />
             </Right>
           </WelcomeContainer>
-          <Device>
-            <Text>Tyler Durden</Text>
-          </Device>
+          <DeviceName>
+            <Text>{deviceName} 📲</Text>
+          </DeviceName>
         </TopContainer>
         <MidContainer>
           <LargeCard

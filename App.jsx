@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { StatusBar, View } from "react-native";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-import * as Device from "expo-device";
-console.log("Device model name is: ", Device.modelName);
 
 // Screens
 import Onboarding from "./screens/Onboarding";
@@ -66,11 +64,11 @@ export default function App() {
   return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <NavigationContainer>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
+        <StatusBar
+          translucent
+          backgroundColor="transparent"
+          barStyle="dark-content"
+        />
         <Stack.Navigator
           screenOptions={{
             headerShown: false, // hide the header bar

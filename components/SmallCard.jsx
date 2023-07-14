@@ -41,12 +41,17 @@ const Price = styled.Text`
 
 const Rate = styled.View`
   flex-direction: row;
-  margin-top: 20px;
+  justify-content: flex-end;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  padding: 0 6px 5px 0;
 `;
 
 const Star = styled.Image`
   width: 16px;
   height: 16px;
+  padding-right: 1px;
 `;
 
 export default function SmallCard() {
