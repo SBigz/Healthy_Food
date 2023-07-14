@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+import { Pedometer } from 'expo-sensors';
 import styled from "styled-components/native";
 
 import Images from "../constants/Images";
@@ -60,12 +62,46 @@ const Asset = styled.Image`
 `;
 
 export default function LargeCard({ title, subtitle }) {
+  // Pedometer State
+  const [currentStepCount, setCurrentStepCount] = useState(0);
+
+  // Pedometer Effect
+  useEffect(() => {
+    const end = new Date();
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    
+    Pedometer.isAvailableAsync().then(
+      result => {
+        if (result) {
+          Pedometer.getStepCountAsync(start, end).then(
+            result => {
+              setCurrentStepCount(result.steps);
+            },
+            error => console.log(error)
+          );
+          
+          const subscription = Pedometer.watchStepCount(result => {
+            setCurrentStepCount(prevStepCount => prevStepCount + result.steps);
+          });
+
+          return () => subscription && subscription.remove();
+        }
+      },
+      error => console.log(error)
+    );
+  }, []);
+
+  // 0.04 calories per step
+  const stepsToCalories = steps => steps * 0.04;
+  const caloriesBurned = stepsToCalories(currentStepCount);
+
   return (
     <Container>
       <Title>{title}</Title>
       <Subtitle>{subtitle}</Subtitle>
       <DynamicText>
-        <Number>538{` `}</Number>
+        <Number>{caloriesBurned.toFixed(0)}{` `}</Number>
         <Kcal>kcal</Kcal>
       </DynamicText>
       <Asset source={Images.Salad} />
