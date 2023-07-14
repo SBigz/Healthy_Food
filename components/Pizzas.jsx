@@ -1,14 +1,11 @@
-import { useInfiniteQuery } from "react-query";
-import { ScrollView } from "react-native";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
 
 import SmallCard from "./SmallCard";
 import Loader from "./Loader";
 import Placeholder from "./PlaceholderCard";
-
-const CardContainer = styled(ScrollView)`
-  flex-direction: row;
-`;
 
 const Title = styled.Text`
   font-family: "Rubik-SemiBold";
@@ -21,55 +18,51 @@ const Title = styled.Text`
 `;
 
 export default function Pizzas() {
-  // Query for pizza data with infinite pagination
+  // Query for pizza data
   const {
     data: pizzaData,
     isLoading: pizzaLoading,
     isError: pizzaError,
-    fetchNextPage: fetchNextPizzaPage,
-    hasNextPage: hasPizzaNextPage,
-  } = useInfiniteQuery("pizzaData", ({ pageParam = 1 }) =>
-    fetch(
-      `https://free-food-menus-api-production.up.railway.app/pizzas?_limit=5&_page=${pageParam}`
-    ).then((response) => response.json())
+  } = useQuery("pizzaData", () =>
+    fetch("https://free-food-menus-api-two.vercel.app/pizzas").then(
+      (response) => response.json()
+    )
   );
 
-  // handlePizzaScroll function for infinite pagination
-  const handlePizzaScroll = (event) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isEndReached =
-      layoutMeasurement.width + contentOffset.x >= contentSize.width;
+  const [itemsToShow, setItemsToShow] = useState(5);
 
-    if (isEndReached && hasPizzaNextPage) {
-      fetchNextPizzaPage();
+  const showMoreItems = () => {
+    if (itemsToShow < pizzaData.length) {
+      setItemsToShow(itemsToShow + 5);
     }
   };
+
+  const renderCard = ({ item, index }) => (
+    <SmallCard
+      key={index}
+      img={item.img}
+      name={item.name}
+      price={item.price}
+      rate={item.rate}
+    />
+  );
 
   return (
     <>
       <Title>Favorite Pizzas</Title>
-      <CardContainer
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        onScroll={handlePizzaScroll}
-        scrollEventThrottle={16}
-      >
-        {pizzaLoading && <Loader />}
-        {pizzaError && <Placeholder />}
-        {!pizzaLoading &&
-          !pizzaError &&
-          pizzaData.pages.map((page, index) =>
-            page.map((data) => (
-              <SmallCard
-                key={index}
-                img={data.img}
-                name={data.name}
-                price={data.price}
-                rate={data.rate}
-              />
-            ))
-          )}
-      </CardContainer>
+      {pizzaLoading && <Loader />}
+      {pizzaError && <Placeholder />}
+      {!pizzaLoading && !pizzaError && (
+        <FlatList
+          horizontal
+          data={pizzaData.slice(0, itemsToShow)}
+          renderItem={renderCard}
+          keyExtractor={(item, index) => index.toString()}
+          onEndReached={showMoreItems}
+          onEndReachedThreshold={0.5}
+          ListFooterComponent={itemsToShow < pizzaData.length ? Loader : null}
+        />
+      )}
     </>
   );
 }

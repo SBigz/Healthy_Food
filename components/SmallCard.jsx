@@ -19,6 +19,9 @@ const ImageContainer = styled.View`
 
 const StyledImage = styled.Image`
   width: 100%;
+  height: 100%;
+  border-top-right-radius: 12px;
+  border-top-left-radius: 12px;
 `;
 
 const TextContainer = styled.View`
@@ -59,6 +62,7 @@ const Star = styled.Image`
 `;
 
 export default function SmallCard({ img, name, price, rate }) {
+  
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < rate; i++) {
@@ -70,12 +74,12 @@ export default function SmallCard({ img, name, price, rate }) {
   return (
     <Container>
       <ImageContainer>
-        <StyledImage source={img} />
+        <StyledImage source={{ uri: img }} />
         <Rate>{renderStars()}</Rate>
       </ImageContainer>
       <TextContainer>
         <Title>{name}</Title>
-        <Price>{price}</Price>
+        <Price>{price}$</Price>
       </TextContainer>
     </Container>
   );

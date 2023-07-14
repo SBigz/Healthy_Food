@@ -1,14 +1,11 @@
-import { useInfiniteQuery } from "react-query";
-import { ScrollView } from "react-native";
+import { useState } from "react";
+import { useQuery } from "react-query";
+import { FlatList } from "react-native";
 import styled from "styled-components/native";
 
 import SmallCard from "./SmallCard";
 import Loader from "./Loader";
 import Placeholder from "./PlaceholderCard";
-
-const CardContainer = styled(ScrollView)`
-  flex-direction: row;
-`;
 
 const Title = styled.Text`
   font-family: "Rubik-SemiBold";
@@ -21,55 +18,51 @@ const Title = styled.Text`
 `;
 
 export default function Chickens() {
-  // Query for chicken data with infinite pagination
+  // Query for chicken data
   const {
     data: chickenData,
     isLoading: chickenLoading,
     isError: chickenError,
-    fetchNextPage: fetchNextChickenPage,
-    hasNextPage: hasChickenNextPage,
-  } = useInfiniteQuery("chickenData", ({ pageParam = 1 }) =>
-    fetch(
-      `https://free-food-menus-api-production.up.railway.app/fried-chicken?_limit=5&_page=${pageParam}`
-    ).then((response) => response.json())
+  } = useQuery("chickenData", () =>
+    fetch("https://free-food-menus-api-two.vercel.app/fried-chicken").then(
+      (response) => response.json()
+    )
   );
 
-  // handleChickenScroll function for infinite pagination
-  const handleChickenScroll = (event) => {
-    const { layoutMeasurement, contentOffset, contentSize } = event.nativeEvent;
-    const isEndReached =
-      layoutMeasurement.width + contentOffset.x >= contentSize.width;
+  const [itemsToShow, setItemsToShow] = useState(5);
 
-    if (isEndReached && hasChickenNextPage) {
-      fetchNextChickenPage();
+  const showMoreItems = () => {
+    if (itemsToShow < chickenData.length) {
+      setItemsToShow(itemsToShow + 5);
     }
   };
+
+  const renderCard = ({ item, index }) => (
+    <SmallCard
+      key={index}
+      img={item.img}
+      name={item.name}
+      price={item.price}
+      rate={item.rate}
+    />
+  );
 
   return (
     <>
       <Title>Favorite Chicken</Title>
-      <CardContainer
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        onScroll={handleChickenScroll}
-        scrollEventThrottle={16}
-      >
-        {chickenLoading && <Loader />}
-        {chickenError && <Placeholder />}
-        {!chickenLoading &&
-          !chickenError &&
-          chickenData.pages.map((page, index) =>
-            page.map((data) => (
-              <SmallCard
-                key={index}
-                img={data.img}
-                name={data.name}
-                price={data.price}
-                rate={data.rate}
-              />
-            ))
-          )}
-      </CardContainer>
+      {chickenLoading && <Loader />}
+      {chickenError && <Placeholder />}
+      {!chickenLoading && !chickenError && (
+        <FlatList
+          horizontal
+          data={chickenData.slice(0, itemsToShow)}
+          renderItem={renderCard}
+          keyExtractor={(item, index) => index.toString()}
+          onEndReached={showMoreItems}
+          onEndReachedThreshold={0.5} // This will trigger the "showMoreItems" function when the end of the list is within half the visible length
+          ListFooterComponent={itemsToShow < chickenData.length ? Loader : null} // Show the loader at the end of the list if there are more items to load
+        />
+      )}
     </>
   );
 }
