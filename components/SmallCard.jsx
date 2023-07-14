@@ -17,6 +17,10 @@ const ImageContainer = styled.View`
   overflow: hidden;
 `;
 
+const StyledImage = styled.Image`
+  width: 100%;
+`;
+
 const TextContainer = styled.View`
   flex: 1;
   width: 100%;
@@ -54,17 +58,24 @@ const Star = styled.Image`
   padding-right: 1px;
 `;
 
-export default function SmallCard() {
+export default function SmallCard({ img, name, price, rate }) {
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 0; i < rate; i++) {
+      stars.push(<Star key={i} source={Images.Star} />);
+    }
+    return stars;
+  };
+
   return (
     <Container>
       <ImageContainer>
-        <Rate>
-          <Star source={Images.Star} />
-        </Rate>
+        <StyledImage source={img} />
+        <Rate>{renderStars()}</Rate>
       </ImageContainer>
       <TextContainer>
-        <Title>Sandwich</Title>
-        <Price>120$</Price>
+        <Title>{name}</Title>
+        <Price>{price}</Price>
       </TextContainer>
     </Container>
   );

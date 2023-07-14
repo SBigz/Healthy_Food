@@ -9,6 +9,7 @@ const Images = {
   Bell: require("../assets/icons/fi-rr-bell.png"),
   Star: require("../assets/icons/Vector.png"),
   Salad: require("../assets/items/salad.png"),
+  PlaceholderImage: require("../assets/items/Placeholder.png"),
 };
 
 export default Images;

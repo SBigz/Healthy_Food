@@ -1,7 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useCallback, useEffect, useState } from "react";
 import { StatusBar, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { QueryClient, QueryClientProvider } from "react-query";
 import * as Font from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
@@ -16,7 +17,10 @@ SplashScreen.preventAutoHideAsync();
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  // Our own state to track whether the app is ready to render
   const [appIsReady, setAppIsReady] = useState(false);
+  // Create a client
+  const queryClient = new QueryClient();
 
   // Load any resources or data that we need prior to rendering the app
   useEffect(() => {
@@ -62,22 +66,24 @@ export default function App() {
   }
 
   return (
-    <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <NavigationContainer>
-        <StatusBar
-          translucent
-          backgroundColor="transparent"
-          barStyle="dark-content"
-        />
-        <Stack.Navigator
-          screenOptions={{
-            headerShown: false, // hide the header bar
-          }}
-        >
-          <Stack.Screen name="Onboarding" component={Onboarding} />
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
+        <NavigationContainer>
+          <StatusBar
+            translucent
+            backgroundColor="transparent"
+            barStyle="dark-content"
+          />
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false, // hide the header bar
+            }}
+          >
+            <Stack.Screen name="Onboarding" component={Onboarding} />
+            <Stack.Screen name="Home" component={Home} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    </QueryClientProvider>
   );
 }
