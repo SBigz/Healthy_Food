@@ -1,14 +1,13 @@
 import styled from "styled-components/native";
-import { View, Text } from "react-native";
 
 import Images from "../constants/Images";
 
 const Container = styled.View`
-  flex: 1;
   background-color: white;
   border-radius: 12px;
   height: 100%;
-  margin: 0 5px;
+  width: 143px;
+  margin-right: 16px;
 `;
 
 const ImageContainer = styled.View`
@@ -16,7 +15,6 @@ const ImageContainer = styled.View`
   width: 100%;
   height: 100%;
   overflow: hidden;
-  border: 1px solid #d4d4d4;
 `;
 
 const TextContainer = styled.View`
@@ -39,7 +37,6 @@ const Price = styled.Text`
   font-size: 14px;
   line-height: 24px;
   color: #d4d4d4;
-  margin-top: 5px;
 `;
 
 const Rate = styled.View`
@@ -61,8 +58,8 @@ export default function SmallCard() {
         </Rate>
       </ImageContainer>
       <TextContainer>
-        <Title>SmallCard</Title>
-        <Price>SmallCard</Price>
+        <Title>Sandwich</Title>
+        <Price>120$</Price>
       </TextContainer>
     </Container>
   );

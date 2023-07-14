@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { Text } from "react-native";
+import { Text, ScrollView } from "react-native";
 
 import Images from "../constants/Images";
 import LargeCard from "../components/LargeCard";
@@ -28,21 +28,17 @@ const MidContainer = styled.View`
 const BottomUpContainer = styled.View`
   flex: 2;
   width: 100%;
-  padding-bottom: 5%;
   padding: 0 20px 20px 20px;
 `;
 
 const BottomDownContainer = styled.View`
   flex: 2;
   width: 100%;
-  padding-bottom: 5%;
   padding: 0 20px 20px 20px;
 `;
 
-const CardContainer = styled.View`
-  flex: 2;
+const CardContainer = styled(ScrollView)`
   flex-direction: row;
-  justify-content: space-between;
 `;
 
 const WelcomeContainer = styled.View`
@@ -84,13 +80,13 @@ const Device = styled.Text`
 `;
 
 const Title = styled.Text`
-  flex: 1;
   font-family: "Rubik-SemiBold";
   font-size: 18px;
   line-height: 28px;
   font-weight: 600;
   color: black;
   text-align: left;
+  margin-bottom: 12px;
 `;
 
 export default function Home() {
@@ -117,15 +113,21 @@ export default function Home() {
             subtitle="Keep your healthy life with healthy food"
           />
         </MidContainer>
+
         <BottomUpContainer>
           <Title>Favorite Chicken</Title>
-          <CardContainer>
+          <CardContainer horizontal showsHorizontalScrollIndicator={false}>
+            <SmallCard />
+            <SmallCard />
             <SmallCard />
           </CardContainer>
         </BottomUpContainer>
+
         <BottomDownContainer>
           <Title>Favorite Pizzas</Title>
-          <CardContainer>
+          <CardContainer horizontal showsHorizontalScrollIndicator={false}>
+            <SmallCard />
+            <SmallCard />
             <SmallCard />
           </CardContainer>
         </BottomDownContainer>
