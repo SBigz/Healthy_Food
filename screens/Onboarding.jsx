@@ -50,7 +50,7 @@ const Subtitle = styled.Text`
   font-family: "Rubik-Regular";
   font-size: 16px;
   font-weight: 400;
-  line-height: 28px; /* 175% */
+  line-height: 28px;
   text-align: center;
   color: #d4d4d4;
   margin-bottom: 10%;

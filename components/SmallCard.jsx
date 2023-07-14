@@ -2,19 +2,19 @@ import styled from "styled-components/native";
 
 import Images from "../constants/Images";
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   background-color: white;
   border-radius: 12px;
-  height: 100%;
   width: 143px;
+  height: 145px;
   margin-right: 16px;
+  box-shadow: 4px 2px 3px rgba(0, 0, 0, 0.3);
 `;
 
 const ImageContainer = styled.View`
   flex: 2;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 `;
 
 const StyledImage = styled.Image`
@@ -62,7 +62,7 @@ const Star = styled.Image`
 `;
 
 export default function SmallCard({ img, name, price, rate }) {
-  
+  // This function will render the stars based on the rate
   const renderStars = () => {
     const stars = [];
     for (let i = 0; i < rate; i++) {

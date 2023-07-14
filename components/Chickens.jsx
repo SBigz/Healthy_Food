@@ -20,17 +20,19 @@ const Title = styled.Text`
 export default function Chickens() {
   // Query for chicken data
   const {
-    data: chickenData,
-    isLoading: chickenLoading,
-    isError: chickenError,
+    data: chickenData, // Data received from the API
+    isLoading: chickenLoading, // Loading state of the API request
+    isError: chickenError, // Error state of the API request
   } = useQuery("chickenData", () =>
     fetch("https://free-food-menus-api-two.vercel.app/fried-chicken").then(
       (response) => response.json()
     )
   );
 
+  // Show more items when the user reaches the end of the list
   const [itemsToShow, setItemsToShow] = useState(5);
 
+  // This function will be called when the user reaches the end of the list
   const showMoreItems = () => {
     if (itemsToShow < chickenData.length) {
       setItemsToShow(itemsToShow + 5);

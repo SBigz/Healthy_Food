@@ -20,17 +20,19 @@ const Title = styled.Text`
 export default function Pizzas() {
   // Query for pizza data
   const {
-    data: pizzaData,
-    isLoading: pizzaLoading,
-    isError: pizzaError,
+    data: pizzaData, // Data received from the API
+    isLoading: pizzaLoading, // Loading state of the API request
+    isError: pizzaError, // Error state of the API request
   } = useQuery("pizzaData", () =>
     fetch("https://free-food-menus-api-two.vercel.app/pizzas").then(
       (response) => response.json()
     )
   );
 
+  // Show more items when the user reaches the end of the list
   const [itemsToShow, setItemsToShow] = useState(5);
 
+  // This function will be called when the user reaches the end of the list
   const showMoreItems = () => {
     if (itemsToShow < pizzaData.length) {
       setItemsToShow(itemsToShow + 5);
@@ -59,8 +61,8 @@ export default function Pizzas() {
           renderItem={renderCard}
           keyExtractor={(item, index) => index.toString()}
           onEndReached={showMoreItems}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={itemsToShow < pizzaData.length ? Loader : null}
+          onEndReachedThreshold={0.5} // This will trigger the "showMoreItems" function when the end of the list is within half the visible length
+          ListFooterComponent={itemsToShow < pizzaData.length ? Loader : null} // Show the loader at the end of the list if there are more items to load
         />
       )}
     </>
