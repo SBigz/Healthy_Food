@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "frontend",
-    "slug": "frontend",
+    "slug": "healthy-food",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -26,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "91629873-4cec-44b3-972d-33fe9a635957"
+      }
+    },
+    "owner": "sbigz"
   }
 }
