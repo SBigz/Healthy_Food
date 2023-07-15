@@ -1,6 +1,8 @@
+import * as React from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 
 import SmallCard from "./SmallCard";
@@ -18,6 +20,7 @@ const Title = styled.Text`
 `;
 
 export default function Pizzas() {
+  const navigation = useNavigation();
   // Query for pizza data
   const {
     data: pizzaData, // Data received from the API
@@ -39,13 +42,17 @@ export default function Pizzas() {
     }
   };
 
+  const SmallCardMemo = React.memo(SmallCard);
   const renderCard = ({ item, index }) => (
-    <SmallCard
+    <SmallCardMemo
       key={index}
       img={item.img}
       name={item.name}
       price={item.price}
       rate={item.rate}
+      dsc={item.dsc}
+      country={item.country}
+      navigation={navigation}
     />
   );
 
@@ -57,6 +64,7 @@ export default function Pizzas() {
       {!pizzaLoading && !pizzaError && (
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={pizzaData.slice(0, itemsToShow)}
           renderItem={renderCard}
           keyExtractor={(item, index) => index.toString()}

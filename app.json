@@ -8,9 +8,10 @@
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
+    "githubUrl": "https://github.com/SBigz/Technical_Food-Client",
     "assetBundlePatterns": [
       "**/*"
     ],

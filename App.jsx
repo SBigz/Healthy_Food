@@ -9,6 +9,7 @@ import * as SplashScreen from "expo-splash-screen";
 // Screens
 import Onboarding from "./screens/Onboarding";
 import Home from "./screens/Home";
+import FoodScreen from "./screens/FoodScreen";
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -81,6 +82,7 @@ export default function App() {
           >
             <Stack.Screen name="Onboarding" component={Onboarding} />
             <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="FoodScreen" component={FoodScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

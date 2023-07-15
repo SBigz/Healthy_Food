@@ -1,5 +1,6 @@
+import { useRef, useEffect } from "react";
+import { Animated, Image, View } from "react-native";
 import styled from "styled-components/native";
-import { Image } from "react-native";
 
 import Images from "../constants/Images";
 import Button from "../components/Button";
@@ -36,9 +37,12 @@ const StyledImage = styled(Image)`
   position: absolute;
 `;
 
-const StyledAnim = styled(Image)`
+const AnimContainer = styled(View)`
   margin-right: 15px;
 `;
+
+// Animated Image
+const StyledAnim = Animated.createAnimatedComponent(Image);
 
 const Title = styled.Text`
   font-family: "Rubik-SemiBold";
@@ -57,6 +61,18 @@ const Subtitle = styled.Text`
 `;
 
 export default function Onboarding({ navigation }) {
+  // Animation Ref
+  const animValue = useRef(new Animated.Value(0)).current;
+
+  // Animation Effect
+  useEffect(() => {
+    Animated.timing(animValue, {
+      toValue: 1,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+
   return (
     <>
       <Container>
@@ -65,15 +81,28 @@ export default function Onboarding({ navigation }) {
           <Title>Healthy Food</Title>
         </TopContainer>
         <MidContainer>
-          <StyledAnim source={Images.Illus} />
+          <AnimContainer>
+            <StyledAnim
+              source={Images.Illus}
+              style={{
+                opacity: animValue,
+                transform: [
+                  {
+                    translateY: animValue.interpolate({
+                      inputRange: [0, 1],
+                      outputRange: [-200, 0],
+                    }),
+                  },
+                ],
+              }}
+            />
+          </AnimContainer>
         </MidContainer>
         <BottomContainer>
           <Subtitle>
             Start your day off right with these healthy breakfast recipes
           </Subtitle>
-          <Button 
-            onPress={() => navigation.navigate("Home")}
-          />
+          <Button onPress={() => navigation.navigate("Home")} />
         </BottomContainer>
       </Container>
     </>

@@ -5,10 +5,11 @@ import Images from "../constants/Images";
 
 const Container = styled.View`
   background-color: white;
-  height: 100%;
-  width: 143px;
-  margin-right: 16px;
   border-radius: 12px;
+  width: 143px;
+  height: 145px;
+  margin-right: 16px;
+  box-shadow: 4px 2px 3px rgba(0, 0, 0, 0.3);
 `;
 
 const ImageContainer = styled.View`

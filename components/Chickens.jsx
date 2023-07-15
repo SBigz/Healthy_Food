@@ -1,6 +1,8 @@
+import * as React from "react";
 import { useState } from "react";
 import { useQuery } from "react-query";
 import { FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import styled from "styled-components/native";
 
 import SmallCard from "./SmallCard";
@@ -18,6 +20,8 @@ const Title = styled.Text`
 `;
 
 export default function Chickens() {
+  const navigation = useNavigation();
+
   // Query for chicken data
   const {
     data: chickenData, // Data received from the API
@@ -39,24 +43,29 @@ export default function Chickens() {
     }
   };
 
+  const SmallCardMemo = React.memo(SmallCard);
   const renderCard = ({ item, index }) => (
-    <SmallCard
+    <SmallCardMemo
       key={index}
       img={item.img}
       name={item.name}
       price={item.price}
       rate={item.rate}
+      dsc={item.dsc}
+      country={item.country}
+      navigation={navigation}
     />
   );
 
   return (
     <>
-      <Title>Favorite Chicken</Title>
+      <Title>Favorites Chicken</Title>
       {chickenLoading && <Loader />}
       {chickenError && <Placeholder />}
       {!chickenLoading && !chickenError && (
         <FlatList
           horizontal
+          showsHorizontalScrollIndicator={false}
           data={chickenData.slice(0, itemsToShow)}
           renderItem={renderCard}
           keyExtractor={(item, index) => index.toString()}

@@ -1,3 +1,4 @@
+import * as React from "react";
 import styled from "styled-components/native";
 
 import Images from "../constants/Images";
@@ -61,24 +62,34 @@ const Star = styled.Image`
   padding-right: 1px;
 `;
 
-export default function SmallCard({ img, name, price, rate }) {
+export default function SmallCard({ navigation, img, name, price, rate, dsc, country }) {
   // This function will render the stars based on the rate
-  const renderStars = () => {
+  const renderStars = React.useMemo(() => {
     const stars = [];
     for (let i = 0; i < rate; i++) {
       stars.push(<Star key={i} source={Images.Star} />);
     }
     return stars;
-  };
+  }, [rate]);
+
+
+  // This function will truncate the Title if it's too long
+  const truncateString = (str, num) => {
+    if (str.length <= num) {
+      return str
+    }
+    return str.slice(0, num) + '...'
+  }
 
   return (
-    <Container>
-      <ImageContainer>
+    <Container 
+    onPress={() => navigation.navigate("FoodScreen", { img, name, price, rate, dsc, country })}>
+    <ImageContainer>
         <StyledImage source={{ uri: img }} />
-        <Rate>{renderStars()}</Rate>
+        <Rate>{renderStars}</Rate>
       </ImageContainer>
       <TextContainer>
-        <Title>{name}</Title>
+      <Title>{truncateString(name, 13)}</Title>
         <Price>{price}$</Price>
       </TextContainer>
     </Container>
