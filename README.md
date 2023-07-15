@@ -2,7 +2,7 @@
 
 Welcome to Healthy App! 
 
-VIDEO / GIF HERE
+![Video GIF](./video.gif)
 
 Please note, this project is primarily a training exercise aimed at providing hands-on experience and knowledge on working with various technologies and libraries in React Native ecosystem.
 
